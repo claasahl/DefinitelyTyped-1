@@ -1,11 +1,7 @@
-// Type definitions for secret-box 0.1
-// Project: https://github.com/jprichardson/secret-box
-// Definitions by: BendingBender <https://github.com/BendingBender>
-// Definitions: https://github.com/DefinitelyTyped/DefinitelyTyped
-
 /// <reference types="node" />
 
-import { BinaryLike } from 'node:crypto';
+import { BinaryLike } from "node:crypto";
+import { Codec } from "varstruct";
 
 /**
  * Encrypt secrets. Built on AES-256-GCM and Scrypt.
@@ -35,7 +31,8 @@ export function encrypt(message: Buffer, passphrase: string | Buffer, opts?: Enc
  * // => The secret launch code is 1234.
  */
 export function decrypt(secret: Buffer, passphrase: string | Buffer): Buffer;
-export const struct: any;
+
+export const struct: Codec<SerializedResult>;
 
 export interface EncryptOptions {
     salt?: Buffer;
@@ -43,4 +40,15 @@ export interface EncryptOptions {
     n?: number;
     r?: number;
     p?: number;
+}
+
+export interface SerializedResult {
+    version: number;
+    n: number;
+    r: number;
+    p: number;
+    salt: Buffer;
+    iv: Buffer;
+    authTag: Buffer;
+    secret: Buffer;
 }

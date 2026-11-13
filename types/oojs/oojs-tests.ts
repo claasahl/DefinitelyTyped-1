@@ -1,4 +1,4 @@
-/* tslint:disable:space-before-function-paren only-arrow-functions prefer-const no-unnecessary-class */
+/* tslint:disable:only-arrow-functions prefer-const no-unnecessary-class */
 
 // #region OO globals
 function SubClass() {}
@@ -22,21 +22,21 @@ let deeplyNestedObject2 = {
             baz: 1,
         },
     },
-    bar: ['foo', 'bar'],
-    baz: { clone: () => 'baz' },
+    bar: ["foo", "bar"],
+    baz: { clone: () => "baz" },
     fooBar: new HTMLAnchorElement(),
-    fooBaz: () => 'fooBaz',
+    fooBaz: () => "fooBaz",
 };
 
 let objectWithMultipleValueTypes = {
     foo: 1,
-    bar: 'baz',
+    bar: "baz",
     baz: false,
 };
 
 let sampleArray = [1, undefined, 3, 4];
 
-let anotherSampleArray = [5, '6', ['7']];
+let anotherSampleArray = [5, "6", ["7"]];
 
 OO.initClass(ParentClass); // $ExpectType void
 
@@ -47,18 +47,18 @@ OO.mixinClass(UsefulMixin, SubClass); // $ExpectType void
 OO.isSubclass(SubClass, ParentClass); // $ExpectType boolean
 
 {
-    OO.getProp(deeplyNestedObject, 'foo', 'bar', 'baz'); // $ExpectType number
+    OO.getProp(deeplyNestedObject, "foo", "bar", "baz"); // $ExpectType number
 
-    OO.getProp(deeplyNestedObject, 'foo', 'bar', 'baz', 'notExist'); // $ExpectType undefined
+    OO.getProp(deeplyNestedObject, "foo", "bar", "baz", "notExist"); // $ExpectType undefined
 
-    OO.getProp(deeplyNestedObject, 'fooBar', 'toString'); // $ExpectType (radix?: number | undefined) => string
+    OO.getProp(deeplyNestedObject, "fooBar", "toString"); // $ExpectType (radix?: number | undefined) => string
 
-    OO.getProp(deeplyNestedObject, 'notExist', 'notExist'); // $ExpectType undefined
+    OO.getProp(deeplyNestedObject, "notExist", "notExist"); // $ExpectType undefined
 }
 
-OO.setProp(deeplyNestedObject, 'foo', 'bar', 2); // $ExpectType void
+OO.setProp(deeplyNestedObject, "foo", "bar", 2); // $ExpectType void
 
-OO.deleteProp(deeplyNestedObject, 'foo', 'bar', 'notExist'); // $ExpectType void
+OO.deleteProp(deeplyNestedObject, "foo", "bar", "notExist"); // $ExpectType void
 
 OO.cloneObject(deeplyNestedObject); // $ExpectType { foo: { bar: { baz: number; }; }; fooBar: number; }
 
@@ -111,7 +111,6 @@ OO.getObjectValues(objectWithMultipleValueTypes); // $ExpectType (string | numbe
             leaf; // $ExpectType string | number | HTMLAnchorElement | (() => string) | { clone: () => string; }
         },
         node => {
-            // tslint:disable-next-line:max-line-length
             // $ExpectType string | number | string[] | HTMLAnchorElement | (() => string) | { baz: number; } | { bar: { baz: number; }; } | { clone: () => string; } | { foo: { bar: { baz: number; }; }; bar: string[]; baz: { clone: () => string; }; fooBar: HTMLAnchorElement; fooBaz: () => string; }
             node;
         },
@@ -167,61 +166,61 @@ let eventEmitter = new OO.EventEmitter();
 
 {
     // $ExpectType EventEmitter
-    eventEmitter.on('event', function (arg1) {
+    eventEmitter.on("event", function(arg1) {
         this; // $ExpectType null
         arg1; // $ExpectType any
     });
 
     // $ExpectType EventEmitter
-    eventEmitter.on('event', 'handler', [], {
+    eventEmitter.on("event", "handler", [], {
         handler: () => 1,
     });
 
     // @ts-expect-error
-    eventEmitter.on('event', 'handler', [], {
+    eventEmitter.on("event", "handler", [], {
         handler: 1,
     });
 
     // $ExpectType EventEmitter
     eventEmitter.on(
-        'event',
-        function (arg1, arg2, arg3) {
+        "event",
+        function(arg1, arg2, arg3) {
             this; // $ExpectType null
             arg1; // $ExpectType any
             arg2; // $ExpectType any
             arg3; // $ExpectType any
         },
-        ['foo', 1],
+        ["foo", 1],
     );
 
     // $ExpectType EventEmitter
     eventEmitter.on(
-        'event',
-        function (arg1, arg2, arg3) {
+        "event",
+        function(arg1, arg2, arg3) {
             this; // $ExpectType {}
             arg1; // $ExpectType any
             arg2; // $ExpectType any
             arg3; // $ExpectType any
         },
-        ['foo', 1],
+        ["foo", 1],
         {},
     );
 }
 
 // $ExpectType EventEmitter
-eventEmitter.once('event', function (arg1) {
+eventEmitter.once("event", function(arg1) {
     this; // $ExpectType null
     arg1; // $ExpectType any
 });
 
 {
     // $ExpectType EventEmitter
-    eventEmitter.off('event');
+    eventEmitter.off("event");
 
     // $ExpectType EventEmitter
     eventEmitter.off(
-        'event',
-        function (arg1) {
+        "event",
+        function(arg1) {
             arg1; // $ExpectType any
         },
         {},
@@ -229,10 +228,10 @@ eventEmitter.once('event', function (arg1) {
 }
 
 // $ExpectType boolean
-eventEmitter.emit('event', 1, 2, 3);
+eventEmitter.emit("event", 1, 2, 3);
 
 // $ExpectType boolean
-eventEmitter.emitThrow('event', 1, 2, 3);
+eventEmitter.emitThrow("event", 1, 2, 3);
 
 {
     // $ExpectType EventEmitter
@@ -245,15 +244,15 @@ eventEmitter.emitThrow('event', 1, 2, 3);
                 this; // $ExpectType { a: () => 1; }
             },
             event2: [
-                function () {
+                function() {
                     this; // $ExpectType { a: () => 1; }
                 },
                 1,
                 2,
                 3,
             ],
-            event3: 'a',
-            event4: ['a', 1, 2, 3],
+            event3: "a",
+            event4: ["a", 1, 2, 3],
         },
     );
 
@@ -264,9 +263,9 @@ eventEmitter.emitThrow('event', 1, 2, 3);
         },
         {
             // @ts-expect-error
-            event3: 'b',
+            event3: "b",
             // @ts-expect-error
-            event4: ['b', 1, 2, 3],
+            event4: ["b", 1, 2, 3],
         },
     );
 }
@@ -278,9 +277,9 @@ eventEmitter.disconnect(
     },
     {
         event() {},
-        event2: [function () {}, 1, 2, 3],
-        event3: 'a',
-        event4: ['a', 1, 2, 3],
+        event2: [function() {}, 1, 2, 3],
+        event3: "a",
+        event4: ["a", 1, 2, 3],
     },
 );
 // #endregion
@@ -304,7 +303,7 @@ let emitterList = new OO.EmitterList();
 
 // $ExpectType void
 emitterList.aggregate({
-    click: 'groupClick',
+    click: "groupClick",
     labelChange: null,
 });
 
@@ -338,14 +337,14 @@ let factory = new OO.Factory();
 // $ExpectType RegistryConstructor
 OO.Factory.super;
 
-class FactoryClass {
-    static key = 'FactoryClass';
-}
-
 class FactoryClass2 {
     static static = {
-        name: 'FactoryClass2',
+        name: "FactoryClass2",
     };
+}
+
+class FactoryClass3 {
+    static key: string;
 }
 
 {
@@ -353,18 +352,18 @@ class FactoryClass2 {
     factory.register(SubClass);
 
     // $ExpectType void
-    factory.register(FactoryClass);
-
-    // $ExpectType void
     factory.register(FactoryClass2);
 
     // $ExpectType void
-    factory.register(SubClass, 'SubClass');
+    factory.register(FactoryClass3);
+
+    // $ExpectType void
+    factory.register(SubClass, "SubClass");
 }
 
 {
     // $ExpectType void
-    factory.unregister('SubClass');
+    factory.unregister("SubClass");
 
     // $ExpectType void
     factory.unregister(SubClass);
@@ -372,10 +371,10 @@ class FactoryClass2 {
 
 {
     // $ExpectType unknown
-    factory.create('SubClass');
+    factory.create("SubClass");
 
     // $ExpectType unknown
-    factory.create('SubClass', 1, 2, 3);
+    factory.create("SubClass", 1, 2, 3);
 }
 // #endregion
 
@@ -384,22 +383,313 @@ let registry = new OO.Registry();
 
 {
     // $ExpectType void
-    registry.register('foo', 1);
+    registry.register("foo", 1);
 
     // $ExpectType void
-    registry.register(['foo'], 1);
+    registry.register(["foo"], 1);
 }
 
 {
     // $ExpectType void
-    registry.unregister('foo');
+    registry.unregister("foo");
 
     // $ExpectType void
-    registry.unregister(['foo']);
+    registry.unregister(["foo"]);
 }
 
 // $ExpectType unknown
-registry.lookup('foo');
+registry.lookup("foo");
+
+{
+    let funcObj = {
+        registerLegal(name: string, data: unknown) {},
+        registerIllegal(foo: number) {},
+        unregisterLegal(name: string, data: unknown) {},
+        unregisterIllegal(foo: []) {},
+    };
+
+    // $ExpectType Registry
+    registry.on("register", function(name, data) {
+        this; // $ExpectType null
+        name; // $ExpectType string
+        data; // $ExpectType unknown
+    });
+
+    registry.on(
+        "register",
+        function(arg1, arg2, arg3, arg4, arg5, name, data) {
+            this; // $ExpectType null
+            arg1; // $ExpectType number
+            arg2; // $ExpectType number
+            arg3; // $ExpectType number
+            arg4; // $ExpectType number
+            arg5; // $ExpectType number
+            name; // $ExpectType string
+            data; // $ExpectType unknown
+        },
+        [1, 2, 3, 4, 5],
+    );
+
+    registry.on("register", "registerLegal", [], funcObj);
+
+    // @ts-expect-error
+    registry.on("register", "registerIllegal", [], funcObj);
+
+    registry.on(
+        "unregister",
+        function(name, data) {
+            this; // $ExpectType number
+            name; // $ExpectType string
+            data; // $ExpectType unknown
+        },
+        [],
+        1,
+    );
+
+    registry.on("unregister", "unregisterLegal", [], funcObj);
+
+    // @ts-expect-error
+    registry.on("unregister", "unregisterIllegal", [], funcObj);
+
+    registry.on("non-exist", function(arg) {
+        this; // $ExpectType null
+        arg; // $ExpectType any
+    });
+}
+
+{
+    // $ExpectType Registry
+    registry.once("register", function(name, data) {
+        this; // $ExpectType null
+        name; // $ExpectType string
+        data; // $ExpectType unknown
+    });
+
+    registry.once("non-exist", function(arg) {
+        this; // $ExpectType null
+        arg; // $ExpectType any
+    });
+}
+
+{
+    let funcObj = {
+        registerLegal(name: string, data: unknown) {},
+        registerIllegal(foo: number) {},
+        unregisterLegal(name: string, data: unknown) {},
+        unregisterIllegal(foo: []) {},
+    };
+
+    // $ExpectType Registry
+    registry.off("register", function(name, data) {
+        this; // $ExpectType null
+        name; // $ExpectType string
+        data; // $ExpectType unknown
+    });
+
+    registry.off("register", "registerLegal", funcObj);
+
+    // @ts-expect-error
+    registry.off("register", "registerIllegal", funcObj);
+
+    registry.off(
+        "unregister",
+        function(name, data) {
+            this; // $ExpectType number
+            name; // $ExpectType string
+            data; // $ExpectType unknown
+        },
+        1,
+    );
+
+    registry.off("unregister", "unregisterLegal", funcObj);
+
+    // @ts-expect-error
+    registry.off("unregister", "unregisterIllegal", funcObj);
+
+    registry.off("non-exist", function(arg) {
+        this; // $ExpectType null
+        arg; // $ExpectType any
+    });
+}
+
+{
+    // $ExpectType boolean
+    registry.emit("register", "foo", 1);
+
+    // @ts-expect-error
+    registry.emit("register");
+
+    // $ExpectType boolean
+    registry.emit("unregister", "foo", 1);
+
+    // @ts-expect-error
+    registry.emit("unregister");
+
+    // $ExpectType boolean
+    registry.emit("non-exist", 1, 2, 3, 4);
+}
+
+{
+    // $ExpectType boolean
+    registry.emitThrow("register", "foo", 1);
+
+    // @ts-expect-error
+    registry.emitThrow("register");
+
+    // $ExpectType boolean
+    registry.emitThrow("unregister", "foo", 1);
+
+    // @ts-expect-error
+    registry.emitThrow("unregister");
+
+    // $ExpectType boolean
+    registry.emitThrow("non-exist", 1, 2, 3, 4);
+}
+
+{
+    let funcObj = {
+        registerLegal(name: string, data: unknown) {},
+        registerIllegal(foo: number) {},
+        unregisterLegal(name: string, data: unknown) {},
+        unregisterIllegal(foo: []) {},
+        prependedUnregisterLegal(
+            arg1: number,
+            arg2: number,
+            arg3: number,
+            arg4: number,
+            arg5: number,
+            name: string,
+            data: unknown,
+        ) {},
+    };
+
+    // $ExpectType Registry
+    registry.connect(funcObj, {
+        register: "registerLegal",
+        unregister: "unregisterLegal",
+    });
+
+    registry.connect(null, {
+        register(name, data) {
+            this; // $ExpectType null
+            name; // $ExpectType string
+            data; // $ExpectType unknown
+        },
+        unregister(name, data) {
+            this; // $ExpectType null
+            name; // $ExpectType string
+            data; // $ExpectType unknown
+        },
+        nonExist(arg) {
+            this; // $ExpectType null
+            arg; // $ExpectType any
+        },
+    });
+
+    registry.connect(null, {
+        register: [
+            function(arg1, arg2, arg3, arg4, arg5, name, data) {
+                this; // $ExpectType null
+                arg2; // $ExpectType number
+                arg3; // $ExpectType number
+                arg4; // $ExpectType number
+                arg5; // $ExpectType number
+                name; // $ExpectType string
+                data; // $ExpectType unknown
+            },
+            1,
+            2,
+            3,
+            4,
+            5,
+        ],
+    });
+
+    registry.connect(funcObj, {
+        unregister: ["prependedUnregisterLegal", 1, 2, 3, 4, 5],
+    });
+
+    registry.connect(funcObj, {
+        // @ts-expect-error
+        register: "registerIllegal",
+
+        // @ts-expect-error
+        unregister: ["registerIllegal", "illegal!"],
+    });
+}
+
+{
+    let funcObj = {
+        registerLegal(name: string, data: unknown) {},
+        registerIllegal(foo: number) {},
+        unregisterLegal(name: string, data: unknown) {},
+        unregisterIllegal(foo: []) {},
+        prependedUnregisterLegal(
+            arg1: number,
+            arg2: number,
+            arg3: number,
+            arg4: number,
+            arg5: number,
+            name: string,
+            data: unknown,
+        ) {},
+    };
+
+    // $ExpectType Registry
+    registry.disconnect(funcObj, {
+        register: "registerLegal",
+        unregister: "unregisterLegal",
+    });
+
+    registry.disconnect(null, {
+        register(name, data) {
+            this; // $ExpectType null
+            name; // $ExpectType string
+            data; // $ExpectType unknown
+        },
+        unregister(name, data) {
+            this; // $ExpectType null
+            name; // $ExpectType string
+            data; // $ExpectType unknown
+        },
+        nonExist(arg) {
+            this; // $ExpectType null
+            arg; // $ExpectType any
+        },
+    });
+
+    registry.disconnect(null, {
+        register: [
+            function(arg1, arg2, arg3, arg4, arg5, name, data) {
+                this; // $ExpectType null
+                arg1; // $ExpectType number
+                arg2; // $ExpectType number
+                arg3; // $ExpectType number
+                arg4; // $ExpectType number
+                arg5; // $ExpectType number
+                name; // $ExpectType string
+                data; // $ExpectType unknown
+            },
+            1,
+            2,
+            3,
+            4,
+            5,
+        ],
+    });
+
+    registry.disconnect(funcObj, {
+        unregister: ["prependedUnregisterLegal", 1, 2, 3, 4, 5],
+    });
+
+    registry.disconnect(funcObj, {
+        // @ts-expect-error
+        register: "registerIllegal",
+
+        // @ts-expect-error
+        unregister: ["registerIllegal", "illegal!"],
+    });
+}
 
 // #endregion
 

@@ -1,4 +1,11 @@
 declare namespace OO {
+    interface EmitterListEventMap {
+        add: [item: EventEmitter, index: number];
+        clear: [];
+        move: [item: EventEmitter, index: number, oldIndex: number];
+        remove: [item: EventEmitter, index: number];
+    }
+
     /**
      * Contain and manage a list of {@link OO.EventEmitter} items.
      *
@@ -76,7 +83,7 @@ declare namespace OO {
     }
 
     interface EmitterListConstructor {
-        new (): EmitterList;
+        new(): EmitterList;
         prototype: EmitterList;
         static: {};
     }
